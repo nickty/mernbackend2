@@ -9,7 +9,7 @@ const app = express()
 
 
 //db connection 
-const mongoUrl = "mongodb://localhost:tryagain"
+const mongoUrl = "mongodb://localhost/tryagain"
 
 mongoose.connect(mongoUrl, {
     useCreateIndex: true, 
@@ -24,7 +24,7 @@ app.post('/register', async (req, res) => {
 
     const newUser = new User(req.body)
 
-    await newUser.save()
+    await newUser.save(()=>console.log("Data added"))
 
     res.send(newUser)
     
