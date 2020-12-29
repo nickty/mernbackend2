@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 
 //import User from './models/User.js'
-import User from './models/User.js'
+import useRouter from './routes/user.js'
 
 const app = express()
 
@@ -12,24 +12,15 @@ const app = express()
 const mongoUrl = "mongodb://localhost/tryagain"
 
 mongoose.connect(mongoUrl, {
-    useCreateIndex: true, 
-    useNewUrlParser: true, 
+    useCreateIndex: true,
+    useNewUrlParser: true,
     useFindAndModify: false
-}).then(()=>console.log('Db connected'))
+}).then(() => console.log('Db connected'))
 
-
+//middeware
 app.use(bodyParser.json())
 
-app.post('/register', async (req, res) => {
-
-    const newUser = new User(req.body)
-
-    await newUser.save(()=>console.log("Data added"))
-
-    res.send(newUser)
-    
-
-})
+app.use('/api', useRouter)
 
 
-app.listen(5000, ()=>console.log('Server is ON'))
+app.listen(5000, () => console.log('Server is ON'))
